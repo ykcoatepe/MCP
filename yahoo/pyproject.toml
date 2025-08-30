@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-yahoo"
+version = "0.0.1"
+description = "Local MCP server (stub) exposing search/fetch tools"
+requires-python = ">=3.10"
+dependencies = [
+  "mcp[cli]>=1.13.0"
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.5.0","pytest>=8.2.0","mypy>=1.10.0"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+disallow_any_generics = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["libs/py/mcp_yahoo/src/mcp_yahoo"]
