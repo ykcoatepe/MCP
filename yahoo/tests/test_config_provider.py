@@ -1,5 +1,4 @@
-import os, importlib
-from types import SimpleNamespace
+import importlib
 
 def test_default_provider_is_yfinance(monkeypatch):
     # Ensure no env overrides
@@ -17,4 +16,3 @@ def test_switch_to_rapidapi_requires_key(monkeypatch):
     if m._provider_name == "rapidapi":
         # If RapidProvider import succeeded without key, it should have raised; so we expect yfinance
         assert False, "rapidapi selected without RAPIDAPI_KEY"
-

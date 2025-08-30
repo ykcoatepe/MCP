@@ -1,4 +1,6 @@
-import os, pytest, datetime as dt
+import os
+import pytest
+import datetime as dt
 from mcp_yahoo.providers.yf import YFProvider
 
 RUN = os.getenv("RUN_NETWORK_TESTS") == "1"
@@ -17,4 +19,3 @@ def test_history_basic():
     sample = bars[-1]
     for k in ("open","high","low","close","volume"):
         assert k in sample
-

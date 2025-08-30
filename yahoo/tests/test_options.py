@@ -1,4 +1,5 @@
-import os, pytest
+import os
+import pytest
 from mcp_yahoo.providers.yf import YFProvider
 
 RUN = os.getenv("RUN_NETWORK_TESTS") == "1"
@@ -14,4 +15,3 @@ def test_options_chain_has_expiries_and_some_rows():
     if data["calls"]:
         row = data["calls"][0]
         assert "contractSymbol" in row and "strike" in row
-

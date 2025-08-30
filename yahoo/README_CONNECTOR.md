@@ -51,3 +51,10 @@ Commands:
 - `make -C yahoo health` prints a small dict from `healthz`.
 - `yahoo/README_CONNECTOR.md` is present with clear steps.
 
+## API Contracts
+Responses conform to Pydantic models (see `mcp_yahoo/schemas.py`). Errors follow:
+```json
+{"error":{"code":"STRING","message":"HUMAN_READABLE"}}
+```
+
+Available tools: search, fetch, get_quote, get_history, get_options_chain, healthz, configz, metricsz.

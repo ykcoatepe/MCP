@@ -1,4 +1,3 @@
-import os, pytest
 from mcp_yahoo.providers.stub import StubProvider
 
 
@@ -12,4 +11,3 @@ def test_fetch_known():
     p = StubProvider()
     q = p.quote("MSFT")
     assert q["symbol"] == "MSFT" and isinstance(q["price"], (int, float))
-

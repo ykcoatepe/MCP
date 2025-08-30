@@ -1,0 +1,24 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install uv
+        run: pip install uv
+      - name: Sync deps
+        run: |
+          cd yahoo
+          uv venv --python 3.11 || true
+          uv lock
+          uv sync --frozen
+      - name: Lint & Test
+        run: |
+          cd yahoo
+          PYTHONPATH=libs/py/mcp_yahoo/src uv run ruff check .
+          PYTHONPATH=libs/py/mcp_yahoo/src uv run pytest -q
+

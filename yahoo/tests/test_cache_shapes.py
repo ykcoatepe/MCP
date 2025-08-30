@@ -1,4 +1,5 @@
-import os, pytest
+import os
+import pytest
 from mcp_yahoo.providers.yf import YFProvider
 
 RUN = os.getenv("RUN_NETWORK_TESTS") == "1"
@@ -10,4 +11,3 @@ def test_quote_cached_briefly():
     q2 = p.quote("AAPL")
     # Within TTL, should be identical dicts (ts captured at first call)
     assert q1 == q2
-

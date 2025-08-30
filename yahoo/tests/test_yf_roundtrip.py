@@ -1,4 +1,5 @@
-import os, pytest
+import os
+import pytest
 from mcp_yahoo.providers.yf import YFProvider
 
 RUN = os.getenv("RUN_NETWORK_TESTS") == "1"
@@ -11,4 +12,3 @@ def test_search_and_quote():
     q = p.quote("AAPL")
     assert q["symbol"] == "AAPL"
     assert q["price"] is None or q["price"] > 0
-

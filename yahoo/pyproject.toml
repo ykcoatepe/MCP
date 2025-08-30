@@ -15,6 +15,9 @@ dependencies = [
   "cachetools>=5.3.2",
 ]
 
+[project.scripts]
+mcp-yahoo = "mcp_yahoo.cli:main"
+
 [project.optional-dependencies]
 dev = ["ruff>=0.5.0","pytest>=8.2.0","mypy>=1.10.0"]
 

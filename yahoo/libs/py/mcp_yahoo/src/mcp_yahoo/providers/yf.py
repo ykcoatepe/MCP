@@ -1,6 +1,7 @@
 from __future__ import annotations
 import time
-import random, time as _time
+import random
+import time as _time
 from typing import Any, Dict, List, Optional
 import httpx
 import yfinance as yf

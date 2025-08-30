@@ -1,11 +1,14 @@
 from __future__ import annotations
-from typing import TypedDict, Optional, Dict, Any
-import os, pathlib, tomllib
+from typing import TypedDict
+import os
+import pathlib
+import tomllib
 
 class Settings(TypedDict, total=False):
     provider: str
     rapidapi_key: str
     rapidapi_host: str
+    rapidapi_region: str
 
 def load_config() -> Settings:
     """
@@ -44,5 +47,8 @@ def load_config() -> Settings:
     host = os.getenv("RAPIDAPI_HOST") or s.get("rapidapi_host") or "apidojo-yahoo-finance-v1.p.rapidapi.com"
     s["rapidapi_host"] = host
 
-    return s
+    # 4) region (default US)
+    region = os.getenv("RAPIDAPI_REGION") or s.get("rapidapi_region") or "US"
+    s["rapidapi_region"] = region
 
+    return s
