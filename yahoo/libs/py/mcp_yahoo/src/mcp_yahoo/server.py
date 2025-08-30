@@ -173,12 +173,30 @@ def metricsz() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     transport = os.getenv("MCP_TRANSPORT", "http")  # http|stdio|sse
+    host = os.getenv("MCP_HOST", "127.0.0.1")
     try:
-        mcp.run(transport=transport, host="127.0.0.1", port=8000, path="/mcp")
+        port = int(os.getenv("MCP_PORT", "8000"))
+    except Exception:
+        port = 8000
+    path = os.getenv("MCP_PATH", "/mcp")
+    try:
+        # Newer FastMCP signatures
+        mcp.run(transport=transport, host=host, port=port, path=path)
     except TypeError:
+        # Older/alternate signatures
         if transport == "sse":
-            mcp.run(transport="sse", mount_path="/mcp")
+            try:
+                mcp.run(transport="sse", host=host, port=port, mount_path=path)
+            except TypeError:
+                mcp.run(transport="sse", mount_path=path)
         elif transport == "http":
-            mcp.run(transport="streamable-http")
+            # Prefer streamable-http where available
+            try:
+                mcp.run(transport="streamable-http", host=host, port=port, mount_path=path)
+            except TypeError:
+                try:
+                    mcp.run(transport="http", host=host, port=port, path=path)
+                except TypeError:
+                    mcp.run(transport="streamable-http")
         else:
             mcp.run(transport="stdio")
