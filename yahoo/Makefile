@@ -7,6 +7,9 @@ setup:
 run:
 	PYTHONPATH=libs/py/mcp_yahoo/src uv run python -m mcp_yahoo.server
 
+run-stdio:
+	PYTHONPATH=libs/py/mcp_yahoo/src MCP_TRANSPORT=stdio uv run python -m mcp_yahoo.server
+
 lint:
 	uv run ruff check .
 
