@@ -74,4 +74,5 @@ PY
 ok "stub search/quote logic"
 
 echo "----------------------------------------"
+[ -x "yahoo/scripts/mcp-yahoo-http.sh" ] && echo "PASS  http runner present" || echo "FAIL  http runner missing"
 echo "All sanity checks PASSED or SKIPPED as appropriate for Task 1 & 2."

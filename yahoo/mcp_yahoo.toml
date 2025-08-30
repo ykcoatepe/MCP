@@ -1,0 +1,8 @@
+[mcp_yahoo]
+# provider: "yfinance" (default) or "rapidapi"
+provider = "yfinance"
+
+# If provider="rapidapi", set these (example host shown for common Yahoo Finance RapidAPI)
+rapidapi_key  = ""  # set via env RAPIDAPI_KEY instead of committing here
+rapidapi_host = "apidojo-yahoo-finance-v1.p.rapidapi.com"
+

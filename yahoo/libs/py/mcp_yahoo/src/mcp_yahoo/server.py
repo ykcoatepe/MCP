@@ -3,10 +3,22 @@ import os
 import json, sys, time as _t
 from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
+from mcp_yahoo.config import load_config
 from mcp_yahoo.providers.yf import YFProvider
+try:
+    from mcp_yahoo.providers.rapid import RapidProvider  # optional
+except Exception:
+    RapidProvider = None  # type: ignore
 
 mcp = FastMCP("yahoo-finance-mcp")
-provider = YFProvider()
+cfg = load_config()
+_provider_name: str
+if (cfg.get("provider") or "yfinance").lower() == "rapidapi" and RapidProvider and cfg.get("rapidapi_key"):
+    provider = RapidProvider(api_key=cfg["rapidapi_key"], host=cfg.get("rapidapi_host", ""))  # type: ignore
+    _provider_name = "rapidapi"
+else:
+    provider = YFProvider()
+    _provider_name = "yfinance"
 
 def jlog(event: str, **kw):
     try:
@@ -93,11 +105,19 @@ def healthz(deep: bool = False) -> Dict[str, Any]:
             status = "degraded"
     return {
         "status": status,
-        "provider": "yfinance",
+        "provider": _provider_name,
         "deep": deep,
         "provider_ok": provider_ok,
         "latency_ms": latency_ms,
     }
+
+@mcp.tool()
+def configz() -> Dict[str, Any]:
+    """Return effective provider/config (secrets redacted)."""
+    effective = dict(cfg)
+    if "rapidapi_key" in effective:
+        effective["rapidapi_key"] = "****"
+    return {"provider": _provider_name, "config": effective}
 
 if __name__ == "__main__":
     transport = os.getenv("MCP_TRANSPORT", "http")  # http|stdio|sse

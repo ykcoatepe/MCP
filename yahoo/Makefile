@@ -10,6 +10,12 @@ run:
 run-stdio:
 	PYTHONPATH=libs/py/mcp_yahoo/src MCP_TRANSPORT=stdio uv run python -m mcp_yahoo.server
 
+run-http:
+	PYTHONPATH=libs/py/mcp_yahoo/src MCP_TRANSPORT=http uv run python -m mcp_yahoo.server
+
+health:
+	PYTHONPATH=libs/py/mcp_yahoo/src uv run python -c "from mcp_yahoo.server import healthz; print(healthz(deep=False))"
+
 lint:
 	uv run ruff check .
 
